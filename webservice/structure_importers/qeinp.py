@@ -72,6 +72,11 @@ def get_fortfloat(key, txt, be_case_sensitive=True):
     *   232
     """
     import re
+    # An opened parenthesis "(" can be followed by any number of whitespaces
+    key.replace("(", "( *")
+    # A closed parenthesis  ")" can be preceded by any number of whitespaces
+    key.replace(")", " *)")
+
     pattern = """
         [\n,]                       # key - value pair can be prepended by comma or start
         [ \t]*                      # in a new line and some optional white space
@@ -83,7 +88,7 @@ def get_fortfloat(key, txt, be_case_sensitive=True):
             ( \d*[\.]\d+  |  \d+[\.]?\d* )
             ([ E | D | e | d ] [+|-]? \d+)?
         )
-        [ \t]*[,\n,#]               # Can be followed by comma, end of line, or a comment
+        [ \t]*[,\n,!]               # Can be followed by comma, end of line, or a comment
         """.format(key)
     REKEYS = re.X | re.M if be_case_sensitive else re.X | re.M | re.I
     match = re.search(
