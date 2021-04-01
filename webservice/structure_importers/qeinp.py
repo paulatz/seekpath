@@ -73,9 +73,9 @@ def get_fortfloat(key, txt, be_case_sensitive=True):
     """
     import re
     # An opened parenthesis "(" can be followed by any number of whitespaces
-    key.replace("(", "( *")
+    key.replace("\(", "\( *")
     # A closed parenthesis  ")" can be preceded by any number of whitespaces
-    key.replace(")", " *)")
+    key.replace("\)", " *\)")
 
     pattern = """
         [\n,]                       # key - value pair can be prepended by comma or start
